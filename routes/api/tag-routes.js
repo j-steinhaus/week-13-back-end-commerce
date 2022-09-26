@@ -1,20 +1,7 @@
 const router = require("express").Router();
 const { Tag, Product, ProductTag } = require("../../models");
 
-router.get("/", (req, res) => {
-  Tag.findAll({
-    include: {
-      model: Product,
-      attributes: ["product_name", "price", "stock", "category_id"],
-    },
-  })
-    .then((dbTagData) => res.json(dbTagData))
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
-    });
-});
-
+// getting a single tag based on it's 'id'
 router.get("/:id", (req, res) => {
   Tag.findOne({
     where: {
@@ -32,6 +19,7 @@ router.get("/:id", (req, res) => {
     });
 });
 
+// creating a new tag based on 'id'
 router.post("/", (req, res) => {
   Tag.create({
     tag_name: req.body.tag_name,
@@ -43,6 +31,7 @@ router.post("/", (req, res) => {
     });
 });
 
+// updating the tag based on 'id'
 router.put("/:id", (req, res) => {
   Tag.update(req.body, {
     where: {
@@ -62,6 +51,7 @@ router.put("/:id", (req, res) => {
     });
 });
 
+// deleting the tag based on 'id'
 router.delete("/:id", (req, res) => {
   Tag.destroy({
     where: {
